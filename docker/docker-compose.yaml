@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  backend:
+    build: ../backend/src/
+    ports:
+      - "9991:80"
+    container_name: backend
+
+  # frontend:
+  #   build:
+  #     context: ../frontend/app
+  #   ports:
+  #     - "3000:3000"
+  #   container_name: frontend
+  #   stdin_open: true
+  #   depends_on:
+  #     - backend
