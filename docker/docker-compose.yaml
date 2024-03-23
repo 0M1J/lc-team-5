@@ -13,12 +13,12 @@ services:
     restart: always
 
   backend:
-    build: ../backend/src/
+    build: ../backend/app/
     ports:
-      - "9991:80"
+      - 8000:8000
     container_name: backend
     environment:
-      - DB_URI:mongodb://mongo:27010/project
+      - DB_URI:mongodb://mongo:27017/api
     networks:
       - project
 
