@@ -1,4 +1,4 @@
-*Note*: docker must have installed
+*Note*: docker must be installed
 
 # git clone repo
 
