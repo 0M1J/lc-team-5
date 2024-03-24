@@ -21,3 +21,8 @@ backend  | INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
 docker compose up # this will start both backend and mongo container
 mongosh # this will connect to mongodb
 ```
+
+
+# Thunder client setup 
+- to test endpoints from vscode install thunder client extenstion
+- load the thunder-collection_users.json file
