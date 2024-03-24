@@ -11,7 +11,7 @@ import follow_ups from "../../data/followup";
 import ChronologicalNotesList from "../common/ChronologicalNoteList";
 import chronological_notes from "../../data/chronologicalNotes";
 
-const TabBar = ({ activeTab, setActiveTab }) => {
+const TabBar = ({ activeTab, setActiveTab, setShowForm }) => {
   return (
     <div className="w-1/6 h-full border-r border-gray-300">
       <div className="flex flex-col justify-start items-center h-full">
@@ -27,7 +27,10 @@ const TabBar = ({ activeTab, setActiveTab }) => {
         </div>
 
         <button
-          onClick={() => setActiveTab("follow-ups")}
+          onClick={() => {
+            setActiveTab("follow-ups");
+            setShowForm(false); // Close form when switching tabs
+          }}
           className={`rounded py-2 px-4 w-2/3 mb-4 text-white ${
             activeTab === "follow-ups" ? "bg-blue-500" : "bg-gray-500"
           }`}
@@ -35,7 +38,10 @@ const TabBar = ({ activeTab, setActiveTab }) => {
           Follow Ups
         </button>
         <button
-          onClick={() => setActiveTab("resources")}
+          onClick={() => {
+            setActiveTab("resources");
+            setShowForm(false); // Close form when switching tabs
+          }}
           className={`rounded py-2 px-4 w-2/3 mb-4 text-white ${
             activeTab === "resources" ? "bg-blue-500" : "bg-gray-500"
           }`}
@@ -43,7 +49,10 @@ const TabBar = ({ activeTab, setActiveTab }) => {
           Resources
         </button>
         <button
-          onClick={() => setActiveTab("goals")}
+          onClick={() => {
+            setActiveTab("goals");
+            setShowForm(false); // Close form when switching tabs
+          }}
           className={`rounded py-2 px-4 w-2/3 mb-4 text-white ${
             activeTab === "goals" ? "bg-blue-500" : "bg-gray-500"
           }`}
@@ -51,7 +60,10 @@ const TabBar = ({ activeTab, setActiveTab }) => {
           Goals
         </button>
         <button
-          onClick={() => setActiveTab("intervention-plans")}
+          onClick={() => {
+            setActiveTab("intervention-plans");
+            setShowForm(false); // Close form when switching tabs
+          }}
           className={`rounded py-2 px-4 w-2/3 mb-4 text-white ${
             activeTab === "intervention-plans" ? "bg-blue-500" : "bg-gray-500"
           }`}
@@ -59,7 +71,10 @@ const TabBar = ({ activeTab, setActiveTab }) => {
           Interventions
         </button>
         <button
-          onClick={() => setActiveTab("chronological-notes")}
+          onClick={() => {
+            setActiveTab("chronological-notes");
+            setShowForm(false); // Close form when switching tabs
+          }}
           className={`rounded py-2 px-4 w-2/3 text-white ${
             activeTab === "chronological-notes" ? "bg-blue-500" : "bg-gray-500"
           }`}
@@ -71,8 +86,43 @@ const TabBar = ({ activeTab, setActiveTab }) => {
   );
 };
 
-const MainContent = ({ activeTab }) => {
+const MainContent = ({ activeTab, showForm, setShowForm }) => {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [formData, setFormData] = useState({
+    title: "",
+    follow_up_date: "",
+    type: "",
+    notes: "",
+    communication_method: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission, you can send formData to backend or perform any other action here
+    console.log(formData);
+    // Close the form after submission
+    setShowForm(false);
+  };
+
+  const formInputs = {
+    "follow-ups": [
+      { label: "Title", name: "title", type: "text" },
+      { label: "Follow-up Date", name: "follow_up_date", type: "date" },
+      { label: "Type", name: "type", type: "text" },
+      { label: "Notes", name: "notes", type: "text" },
+      { label: "Communication Method", name: "communication_method", type: "text" },
+    ],
+    // Define form inputs for other tabs similarly
+  };
 
   let content = null;
 
@@ -111,10 +161,34 @@ const MainContent = ({ activeTab }) => {
         <i className="fas fa-search text-gray-400"></i>
       </div>
       <div className="text-right">
-        <button className="bg-blue-500 text-white py-2 px-4 mx-2 rounded">
+        <button 
+          onClick={() => setShowForm(!showForm)} // Toggle form visibility
+          className="bg-blue-500 text-white py-2 px-4 mx-2 rounded"
+        >
           Add New
         </button>
       </div>
+      {showForm && (
+          <form onSubmit={handleSubmit} className="w-full p-6">
+            {/* Dynamically render input fields based on activeTab */}
+            {formInputs[activeTab].map((input, index) => (
+              <div key={index} className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">{input.label}</label>
+                <input
+                  type={input.type}
+                  name={input.name}
+                  value={formData[input.name]}
+                  onChange={handleInputChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+            ))}
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Submit
+            </button>
+          </form>
+        )}
       {content}
     </div>
   );
@@ -132,14 +206,16 @@ const ChatSection = () => {
 
 const CaretakerDashboard = () => {
   const [activeTab, setActiveTab] = useState("follow-ups");
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <div className="flex h-screen">
-      <TabBar setActiveTab={setActiveTab} activeTab={activeTab} />
-      <MainContent activeTab={activeTab} />
+      <TabBar setActiveTab={setActiveTab} activeTab={activeTab} setShowForm={setShowForm} />
+      <MainContent activeTab={activeTab} showForm={showForm} setShowForm={setShowForm} />
       <ChatSection />
     </div>
   );
 };
 
 export default CaretakerDashboard;
+
