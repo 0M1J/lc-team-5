@@ -1,7 +1,10 @@
+import Login from './auth/Login';
+import Signup from './auth/Signup';
+
 const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
+      <Signup></Signup>
     </div>
   );
 };

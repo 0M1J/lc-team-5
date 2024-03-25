@@ -90,6 +90,13 @@ const TabBar = ({ activeTab, setActiveTab, setShowForm }) => {
 const MainContent = ({ activeTab, showForm, setShowForm }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
+  const filterContent = (contentList) => {
+    return contentList.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) || 
+      (item.notes && item.notes.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  };
   const [formData, setFormData] = useState({
     title: "",
     follow_up_date: "",
@@ -153,7 +160,8 @@ const MainContent = ({ activeTab, showForm, setShowForm }) => {
       ]
     }
 ];
-    content = <FollowUpList followUps={follow_ups.follow_ups} userType={"0"} />;
+    const filteredFollowUps = filterContent(follow_ups.follow_ups);
+    content = <FollowUpList followUps={filteredFollowUps} userType={"0"} />;
   } else if (activeTab === "resources") {
     field = [{ name: "title", label: "Title", type: "text" },
     { name: "description", label: "Description", type: "text" },
@@ -178,7 +186,8 @@ const MainContent = ({ activeTab, showForm, setShowForm }) => {
       ]
     }
 ];
-    content = <ResourceList resources={resources.resources} userType={"0"} />;
+    const filteredResources = filterContent(resources.resources);
+    content = <ResourceList resources={filteredResources} userType={"0"} />;
   } else if (activeTab === "goals") {
     field = [{ name: "Goal title", label: "Goal title", type: "text" },
     { name: "description", label: "Description", type: "text" },
@@ -217,15 +226,17 @@ const MainContent = ({ activeTab, showForm, setShowForm }) => {
       ]
     }
 ];
-    content = <GoalList goals={goalsData.goals} userType={"0"} />;
+    const filteredGoals = filterContent(goalsData.goals);
+    content = <GoalList goals={filteredGoals} userType={"0"} />;
   } else if (activeTab === "intervention-plans") {
 
     field = [{ name: "title", label: "Title", type: "text" },
     { name: "description", label: "Description", type: "text" },
 ];
+    const filteredInterventions = filterContent(interventions.interventions);
     content = (
       <InterventionList
-        interventions={interventions.interventions}
+        interventions={filteredInterventions}
         userType={"0"}
       />
     );
@@ -258,9 +269,10 @@ const MainContent = ({ activeTab, showForm, setShowForm }) => {
     { name: "Intervention link", label: "Intervention link", type: "url" ,name:"url" ,id:"url", placeholder:"https://intervention/:id" },
     { name: "Goal link", label: "Goal link", type: "url" ,name:"url" ,id:"url", placeholder:"https://goal/:id" }
 ];
+    const filteredChronologicalNotes = filterContent(chronological_notes.chronological_notes);
     content = (
       <ChronologicalNotesList
-        chronologicalNotes={chronological_notes.chronological_notes}
+        chronologicalNotes={filteredChronologicalNotes}
         userType={"0"}
       ></ChronologicalNotesList>
     );

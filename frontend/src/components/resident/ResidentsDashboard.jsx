@@ -63,18 +63,30 @@ const TabBar = ({ activeTab, setActiveTab }) => {
 const MainContent = ({ activeTab }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
+  const filterContent = (contentList) => {
+    return contentList.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (item.notes && item.notes.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  };
+
   let content = null;
 
   if (activeTab === "follow-ups") {
-    content = <FollowUpList followUps={follow_ups.follow_ups} userType={"1"} />;
+    const filteredFollowUps = filterContent(follow_ups.follow_ups);
+    content = <FollowUpList followUps={filteredFollowUps} userType={"1"} />;
   } else if (activeTab === "resources") {
-    content = <ResourceList resources={resources.resources} userType={"1"} />;
+    const filteredResources = filterContent(resources.resources);
+    content = <ResourceList resources={filteredResources} userType={"1"} />;
   } else if (activeTab === "goals") {
-    content = <GoalList goals={goalsData.goals} userType={"1"} />;
+    const filteredGoals = filterContent(goalsData.goals);
+    content = <GoalList goals={filteredGoals} userType={"1"} />;
   } else if (activeTab === "intervention-plans") {
+    const filteredInterventions = filterContent(interventions.interventions);
     content = (
       <InterventionList
-        interventions={interventions.interventions}
+        interventions={filteredInterventions}
         userType={"1"}
       />
     );
