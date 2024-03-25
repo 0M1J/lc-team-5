@@ -105,13 +105,16 @@ const MainContent = ({ activeTab }) => {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search..."
+          placeholder="Type here..."
           className="w-2/3 p-2 border border-gray-300 mr-2 mt-3"
         />
-        <i className="fas fa-search text-gray-400"></i>
+        <button type="button" className="p-2 bg-gray-200 rounded ml-2 mt-3">
+          Search
+        </button>
       </div>
+
       <div className="text-right">
-        <button className="bg-blue-500 text-white py-2 px-4 mx-2 rounded">
+        <button className="bg-blue-500 text-white py-2 px-4 mx-2 mt-5 rounded">
           Add New
         </button>
       </div>

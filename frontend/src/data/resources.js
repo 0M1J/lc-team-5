@@ -1,28 +1,28 @@
 const resources = {
   resources: [
     {
-      title: "Introduction to Machine Learning",
+      title: "Self-Care for Women: A Comprehensive Guide",
       description:
-        "A comprehensive guide covering the basics of machine learning algorithms and concepts.",
-      type: "Document",
-      link: "https://www.example.com/intro-to-ml.pdf",
-      issues: ["Understanding algorithms", "Data preprocessing challenges"],
+        "A comprehensive guide covering various self-care practices tailored specifically for women. Includes tips on managing stress, prioritizing mental health, and nurturing overall well-being.",
+      type: "Article",
+      link: "https://theselfworthjournal.com/prioritizing-self-worth-a-comprehensive-guide-to-self-care-for-women/",
+      issues: ["Stress management", "Mental health", "Well-being"],
     },
     {
-      title: "Yoga for Beginners",
+      title: "Empowerment Through Yoga: A Women's Guide",
       description:
-        "A series of instructional videos aimed at beginners to learn yoga poses and relaxation techniques.",
+        "A series of instructional yoga videos specifically designed to empower women. Learn yoga poses and relaxation techniques aimed at boosting confidence, strength, and inner balance.",
       type: "Video",
-      link: "https://www.example.com/yoga-for-beginners",
-      issues: ["Stress management", "Improving flexibility"],
+      link: "https://www.youtube.com/watch?v=iglbdN1tmF0&ab_channel=YogaWithAdriene",
+      issues: ["Confidence building", "Strength", "Inner balance"],
     },
     {
-      title: "Financial Planning 101",
+      title: "Financial Independence for Women Workbook",
       description:
-        "A detailed activity workbook for individuals looking to manage their finances effectively.",
-      type: "Activity",
-      link: "https://www.example.com/financial-planning-workbook",
-      issues: ["Budgeting", "Investment strategies"],
+        "An interactive workbook designed to empower women with financial knowledge and skills. Learn budgeting strategies, investment tips, and steps toward achieving financial independence.",
+      type: "Book",
+      link: "https://www.amazon.ca/Financial-Independence-Women-Control-Balanced/dp/161448497X",
+      issues: ["Financial literacy", "Budgeting", "Investment strategies"],
     },
   ],
 };

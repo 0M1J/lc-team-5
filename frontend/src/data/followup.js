@@ -1,24 +1,27 @@
 const follow_ups = {
   follow_ups: [
     {
-      title: "Marketing Strategy Discussion",
+      title: "Follow-up Appointment: Health Check",
       follow_up_date: "2024-04-10",
-      type: "Meeting",
-      notes: "Review and finalize the marketing strategy for Q2.",
+      type: "Appointment",
+      notes:
+        "Schedule a follow-up appointment for a comprehensive women's health check, including screenings for breast health, reproductive health, and general well-being.",
       communication_method: "In person",
     },
     {
-      title: "Project Status Checkpoint",
+      title: "Support Group Session",
       follow_up_date: "2024-04-15",
-      type: "Checkpoint",
-      notes: "Assess the progress of the project and address any challenges.",
-      communication_method: "Email",
+      type: "Support Group",
+      notes:
+        "Facilitate a support group session for women experiencing postpartum challenges. Provide a safe space for sharing experiences and accessing resources for mental and emotional support.",
+      communication_method: "Virtual",
     },
     {
-      title: "Performance Review",
+      title: "Follow-up Call: Counseling Session Review",
       follow_up_date: "2024-04-20",
-      type: "Appointment",
-      notes: "Conduct quarterly performance reviews with team members.",
+      type: "Follow-up Call",
+      notes:
+        "Conduct a follow-up call with women patient who recently attended counseling sessions to review progress, discuss coping strategies, and provide additional support as needed.",
       communication_method: "Phone",
     },
   ],

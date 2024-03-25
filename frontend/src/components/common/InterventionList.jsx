@@ -13,6 +13,11 @@ const InterventionList = ({ interventions, userType }) => {
               Modify
             </button>
           )}
+          {userType === "1" && (
+            <button className="bg-blue-500 text-white px-4 py-2 rounded">
+              Give Feedback
+            </button>
+          )}
         </div>
       ))}
     </div>
