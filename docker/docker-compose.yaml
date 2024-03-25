@@ -1,10 +1,26 @@
 version: "3.9"
 services:
-  backend:
-    build: ../backend/src/
+  mongo:
+    container_name: mongo
+    image: mongodb/mongodb-community-server:latest
     ports:
-      - "9991:80"
+      - 27017:27017
+    volumes:
+      - mongo.db:/data/db
+      - mongo.config:/data/configdb
+    networks:
+      - project
+    restart: always
+
+  backend:
+    build: ../backend/app/
+    ports:
+      - 8000:8000
     container_name: backend
+    environment:
+      - DB_URI:mongodb://mongo:27017/api
+    networks:
+      - project
 
   # frontend:
   #   build:
@@ -15,3 +31,10 @@ services:
   #   stdin_open: true
   #   depends_on:
   #     - backend
+
+networks:
+  project:
+
+volumes:
+  mongo.db:
+  mongo.config:
