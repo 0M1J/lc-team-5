@@ -1,9 +1,9 @@
 const interventions = {
   interventions: [
     {
-      title: "Stress Management Workshop",
+      title: "Valuation and positive reinforcement",
       description:
-        "A workshop focusing on practical techniques to reduce stress and improve mental well-being.",
+        "Valuation as well as positive reinforcement work well with it",
     },
     {
       title: "Nutritional Counseling Session",
