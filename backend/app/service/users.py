@@ -1,4 +1,4 @@
-from models.users import User, UserIn, UserCreate, Role, ResidentInformation, Employee
+from models.users import User, UserLoginIn, UserCreate, Role, ResidentInformation, Employee
 from crud.users import CRUDUser
 from core.security import get_password_hash, verify_password
 from fastapi import HTTPException
@@ -18,7 +18,7 @@ class UserService:
         return CRUDUser.find_user_by_email(email)
     
     @staticmethod
-    def get_user_profile(user: UserIn) -> dict:
+    def get_user_profile(user: UserLoginIn) -> dict:
         existing_user = CRUDUser.find_user_by_email(user.email)
         print(existing_user)
         if existing_user:

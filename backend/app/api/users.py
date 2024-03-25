@@ -1,7 +1,7 @@
 from typing import Union
 from fastapi import APIRouter, HTTPException, Depends, Body
 from service.users import UserService
-from models.users import UserIn, UserOut, ResidentInformation, EmployeeInformation
+from models.users import UserIn, UserLoginIn, UserOut, ResidentInformation, EmployeeInformation
 
 user_router = APIRouter()
 
@@ -12,7 +12,7 @@ def create_user(user: UserIn):
     return created_user
 
 @user_router.post("/users/login", response_model=UserOut)
-def read_user(user: UserIn):
+def read_user(user: UserLoginIn):
     user = UserService.get_user_profile(user)
     if user:
         return user

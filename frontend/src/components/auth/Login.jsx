@@ -1,11 +1,38 @@
 import React from "react";
+import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Assuming you are using React Router v6
 
 const Login = () => {
   const navigate = useNavigate();
 
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
   const handleSignUpClick = () => {
     navigate("/signup");
+  };
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${baseURL}/users/login`, formData);
+      console.log('login successful:', response.data.role);
+      if (response.data.role === "resident") {
+        navigate("/resident-dashboard");
+      }else{
+        navigate("/caretaker-dashboard");
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      // Handle error, show error message to user, etc.
+    }
   };
 
   return (
@@ -16,15 +43,21 @@ const Login = () => {
             Log in to your account
           </h2>
         </div>
-        <form className="mt-8 space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             placeholder="Email address"
             required
           />
           <input
             type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             placeholder="Password"
             required

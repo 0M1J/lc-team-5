@@ -52,6 +52,10 @@ class UserIn(BaseModel):
     password: str
     role: Role
 
+class UserLoginIn(BaseModel):
+    email: str
+    password: str
+
 class EmployeeInformation(BaseModel):
     model_type: Literal["EmployeeInformation"] = "EmployeeInformation"
     first_name: str = ""
