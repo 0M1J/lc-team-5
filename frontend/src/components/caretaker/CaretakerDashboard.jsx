@@ -10,6 +10,7 @@ import FollowUpList from "../common/FollowUpList";
 import follow_ups from "../../data/followup";
 import ChronologicalNotesList from "../common/ChronologicalNoteList";
 import chronological_notes from "../../data/chronologicalNotes";
+import DynamicForm from "./DynamicForm";
 
 const TabBar = ({ activeTab, setActiveTab, setShowForm }) => {
   return (
@@ -125,14 +126,103 @@ const MainContent = ({ activeTab, showForm, setShowForm }) => {
   };
 
   let content = null;
+  let field = {};
 
   if (activeTab === "follow-ups") {
+    field = [{ name: "title", label: "Title", type: "text" },
+    { name: "date", label: "Date", type: "date" },
+    { 
+      name: "type", 
+      label: "Follow-Up Type", 
+      type: "radio", 
+      options: [
+        { value: "Appointment", label: "Appointment" },
+        { value: "Meeting", label: "Meeting" },
+        { value: "Checkpoint", label: "Checkpoint" }
+      ]
+    },
+    { name: "notes", label: "Notes", type: "textarea" },
+    { 
+      name: "communicationMethod", 
+      label: "Communication Method", 
+      type: "radio", 
+      options: [
+        { value: "Email", label: "Email" },
+        { value: "Phone", label: "Phone" },
+        { value: "In person", label: "In person" }
+      ]
+    }
+];
     content = <FollowUpList followUps={follow_ups.follow_ups} userType={"0"} />;
   } else if (activeTab === "resources") {
+    field = [{ name: "title", label: "Title", type: "text" },
+    { name: "description", label: "Description", type: "text" },
+    { 
+      name: "type", 
+      label: "Resource Type", 
+      type: "radio", 
+      options: [
+        { value: "Activity", label: "Activity" },
+        { value: "Video", label: "Video" },
+        { value: "Document", label: "Document" }
+      ]
+    },
+    { name: "link", label: "Link", type: "url" ,name:"url" ,id:"url", placeholder:"https://" },
+    { 
+      name: "Issues", 
+      label: "Issues", 
+      type: "radio", 
+      options: [
+        { value: "Related issues", label: "Related issues" },
+        { value: "challenges", label: "challenges" },
+      ]
+    }
+];
     content = <ResourceList resources={resources.resources} userType={"0"} />;
   } else if (activeTab === "goals") {
+    field = [{ name: "Goal title", label: "Goal title", type: "text" },
+    { name: "description", label: "Description", type: "text" },
+    { 
+      name: "Term", 
+      label: "Term", 
+      type: "radio", 
+      options: [
+        { value: "Short", label: "Short" },
+        { value: "Medium", label: "Medium" },
+        { value: " Long term", label: " Long term" }
+      ]
+    },
+    { 
+      name: "Status", 
+      label: "Status", 
+      type: "radio", 
+      options: [
+        { value: "Future", label: "Future" },
+        { value: "In progress", label: "In progress" },
+        { value: " Paused", label: " Paused" },
+        { value: " Completed", label: " Completed" }
+      ]
+    },
+    { name: "Means", label: "Means", type: "textarea" },
+    { 
+      name: "Health aspect(s)", 
+      label: "Health aspect(s)", 
+      type: "radio", 
+      options: [
+        { value: "Global", label: "Global" },
+        { value: "Mental", label: "Mental" },
+        { value: "Physical", label: "Physical" },
+        { value: "Social", label: "Social" },
+        { value: "Economic Health", label: "Economic Health" },
+      ]
+    }
+];
     content = <GoalList goals={goalsData.goals} userType={"0"} />;
   } else if (activeTab === "intervention-plans") {
+
+    field = [{ name: "title", label: "Title", type: "text" },
+    { name: "description", label: "Description", type: "text" },
+];
     content = (
       <InterventionList
         interventions={interventions.interventions}
@@ -140,6 +230,34 @@ const MainContent = ({ activeTab, showForm, setShowForm }) => {
       />
     );
   } else if (activeTab === "chronological-notes") {
+    field = [{ name: "Title", label: "Title", type: "text" },
+    { name: "date", label: "Date", type: "date" },
+    { name: "Details", label: "Details", type: "textarea" },
+    { name: "Details", label: "Observations", type: "textarea" },
+    {
+      name: "Employee",
+      label: "Employee",
+      type: "select",
+      options: [
+        { value: "Employee 1", label: "Employee 1" },
+        { value: "Employee 2", label: "Employee 2" },
+        { value: "Employee 3", label: "Employee 3" },
+      ],
+    },
+    { 
+      name: "Type of follow up", 
+      label: "Type of follow up", 
+      type: "radio", 
+      options: [
+        { value: "Meeting", label: "Meeting" },
+        { value: "Action", label: "Action" },
+        { value: " Apointment", label: " Apointment" }
+      ]
+    },
+    { name: "Motive", label: "Motive", type: "text" },
+    { name: "Intervention link", label: "Intervention link", type: "url" ,name:"url" ,id:"url", placeholder:"https://intervention/:id" },
+    { name: "Goal link", label: "Goal link", type: "url" ,name:"url" ,id:"url", placeholder:"https://goal/:id" }
+];
     content = (
       <ChronologicalNotesList
         chronologicalNotes={chronological_notes.chronological_notes}
@@ -166,32 +284,12 @@ const MainContent = ({ activeTab, showForm, setShowForm }) => {
       <div className="text-right">
         <button 
           onClick={() => setShowForm(!showForm)} // Toggle form visibility
-          className="bg-blue-500 text-white py-2 px-4 mx-2 rounded"
+          className="bg-blue-500 text-white py-2 px-4 mx-2 rounded mr-20 mt-5"
         >
           Add New
         </button>
       </div>
-      {showForm && (
-          <form onSubmit={handleSubmit} className="w-full p-6">
-            {/* Dynamically render input fields based on activeTab */}
-            {formInputs[activeTab].map((input, index) => (
-              <div key={index} className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">{input.label}</label>
-                <input
-                  type={input.type}
-                  name={input.name}
-                  value={formData[input.name]}
-                  onChange={handleInputChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  required
-                />
-              </div>
-            ))}
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Submit
-            </button>
-          </form>
-        )}
+      {showForm && <DynamicForm onSubmit={handleSubmit} fields={field}/>}
       {content}
     </div>
   );
